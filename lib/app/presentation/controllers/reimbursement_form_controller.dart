@@ -35,6 +35,33 @@ class ReimbursementFormController extends GetxController {
     approvers.value = ApproverModel.getDummyData();
   }
 
+  // Helper method to check if form is complete
+  bool isFormComplete() {
+    return selectedDate.value != null &&
+        selectedClaimType.value.isNotEmpty &&
+        detailController.text.isNotEmpty &&
+        uploadedItems.isNotEmpty;
+  }
+
+  // Helper method to get total nominal
+  int getTotalNominal() {
+    return uploadedItems.fold(
+      0,
+      (sum, item) => sum + item.nominal,
+    );
+  }
+
+  // Clear all form data
+  void clearForm() {
+    selectedDate.value = null;
+    selectedClaimType.value = '';
+    detailController.clear();
+    uploadedItems.clear();
+    selectedFiles.clear();
+    nominalController.clear();
+    keteranganController.clear();
+  }
+
   // Pick images
   Future<void> pickImages() async {
     try {
