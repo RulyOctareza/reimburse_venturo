@@ -28,6 +28,15 @@ class ReimbursementListPage extends GetView<ReimbursementListController> {
             final item = controller.reimbursements[index];
             return CustomCard(
               padding: const EdgeInsets.all(16),
+              onTap: () {
+                Get.toNamed(
+                  '/reimbursement-form',
+                  parameters: {
+                    'id': item.id,
+                    'title': item.title,
+                  },
+                );
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
