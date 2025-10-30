@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:reimburse_venturo/app/data/models/approver_model.dart';
+import 'package:reimburse_venturo/app/domain/entities/approver.dart';
 import 'package:reimburse_venturo/app/domain/entities/upload_file.dart';
 import 'package:reimburse_venturo/app/domain/entities/uploaded_item.dart';
 import 'package:reimburse_venturo/core/utils/currency_formatter.dart';
@@ -21,7 +23,17 @@ class ReimbursementFormController extends GetxController {
   // Uploaded items (saved items)
   final RxList<UploadedItem> uploadedItems = <UploadedItem>[].obs;
 
+  // Approvers
+  final RxList<Approver> approvers = <Approver>[].obs;
+
   final ImagePicker _imagePicker = ImagePicker();
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Load dummy approvers
+    approvers.value = ApproverModel.getDummyData();
+  }
 
   // Pick images
   Future<void> pickImages() async {
