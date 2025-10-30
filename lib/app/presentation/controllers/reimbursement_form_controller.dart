@@ -35,6 +35,27 @@ class ReimbursementFormController extends GetxController {
     approvers.value = ApproverModel.getDummyData();
   }
 
+  // Validate form
+  String? validateForm() {
+    if (selectedDate.value == null) {
+      return 'Tanggal harus dipilih';
+    }
+
+    if (selectedClaimType.value.isEmpty) {
+      return 'Jenis klaim harus dipilih';
+    }
+
+    if (detailController.text.isEmpty) {
+      return 'Detail pengajuan harus diisi';
+    }
+
+    if (uploadedItems.isEmpty) {
+      return 'Minimal 1 lampiran bukti harus diupload';
+    }
+
+    return null; // Form is valid
+  }
+
   // Helper method to check if form is complete
   bool isFormComplete() {
     return selectedDate.value != null &&
