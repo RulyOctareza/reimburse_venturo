@@ -18,11 +18,6 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
-      home: const Scaffold(
-        body: Center(
-          child: Text('Reimbursement App'),
-        ),
-      ),
     );
   }
 }
