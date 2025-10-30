@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:reimburse_venturo/app/routes/app_pages.dart';
 import 'package:reimburse_venturo/core/theme/app_theme.dart';
 
 void main() {
@@ -10,10 +12,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Reimbursement App',
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
+      initialRoute: AppPages.initial,
+      getPages: AppPages.routes,
       home: const Scaffold(
         body: Center(
           child: Text('Reimbursement App'),
