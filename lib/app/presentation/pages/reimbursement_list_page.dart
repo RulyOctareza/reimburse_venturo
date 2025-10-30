@@ -20,45 +20,61 @@ class ReimbursementListPage extends GetView<ReimbursementListController> {
         ),
       ),
       body: Obx(
-        () => ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: controller.reimbursements.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 12),
-          itemBuilder: (context, index) {
-            final item = controller.reimbursements[index];
-            return CustomCard(
-              padding: const EdgeInsets.all(16),
-              onTap: () {
-                Get.toNamed(
-                  '/reimbursement-form',
-                  parameters: {
-                    'id': item.id,
-                    'title': item.title,
-                  },
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      item.title,
-                      style: AppTextStyles.personName.copyWith(
-                        fontSize: 14,
-                      ),
+        () => controller.reimbursements.isEmpty
+            ? const Center(
+                child: Text('Tidak ada data reimbursement'),
+              )
+            : ListView.separated(
+                padding: const EdgeInsets.all(16),
+                itemCount: controller.reimbursements.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  final item = controller.reimbursements[index];
+                  return CustomCard(
+                    padding: const EdgeInsets.all(16),
+                    onTap: () {
+                      Get.toNamed(
+                        '/reimbursement-form',
+                        parameters: {
+                          'id': item.id,
+                          'title': item.title,
+                        },
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.title,
+                            style: AppTextStyles.personName.copyWith(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'Ajukan',
+                              style: AppTextStyles.personName.copyWith(
+                                color: AppColors.primaryBlue,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 14,
+                              color: AppColors.primaryBlue,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                  Text(
-                    'Ajukan >',
-                    style: AppTextStyles.personName.copyWith(
-                      color: AppColors.primaryBlue,
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
-            );
-          },
-        ),
       ),
     );
   }

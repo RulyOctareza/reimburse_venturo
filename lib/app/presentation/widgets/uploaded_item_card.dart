@@ -75,9 +75,10 @@ class UploadedItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      elevation: 1,
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade200),
       ),
       child: InkWell(
         onTap: onTap,

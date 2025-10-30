@@ -26,37 +26,42 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width ?? double.infinity,
-      decoration: useGradient
-          ? BoxDecoration(
-              gradient: AppColors.primaryGradient,
-              borderRadius: BorderRadius.circular(8),
-            )
-          : BoxDecoration(
-              color: backgroundColor ?? AppColors.primaryBlue,
-              borderRadius: BorderRadius.circular(8),
-            ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(8),
-          child: Center(
-            child: isLoading
-                ? const SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      strokeWidth: 2,
+    final bool isDisabled = onPressed == null && !isLoading;
+
+    return Opacity(
+      opacity: isDisabled ? 0.5 : 1.0,
+      child: Container(
+        height: height,
+        width: width ?? double.infinity,
+        decoration: useGradient
+            ? BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.circular(8),
+              )
+            : BoxDecoration(
+                color: backgroundColor ?? AppColors.primaryBlue,
+                borderRadius: BorderRadius.circular(8),
+              ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: isLoading ? null : onPressed,
+            borderRadius: BorderRadius.circular(8),
+            child: Center(
+              child: isLoading
+                  ? const SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : Text(
+                      text,
+                      style: textStyle ?? AppTextStyles.button,
                     ),
-                  )
-                : Text(
-                    text,
-                    style: textStyle ?? AppTextStyles.button,
-                  ),
+            ),
           ),
         ),
       ),
