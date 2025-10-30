@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_form_controller.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/custom_dropdown.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/date_picker_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/section_header.dart';
 import 'package:reimburse_venturo/core/constants/app_colors.dart';
+import 'package:reimburse_venturo/core/constants/claim_types.dart';
 
 class ReimbursementFormPage extends GetView<ReimbursementFormController> {
   const ReimbursementFormPage({super.key});
@@ -37,7 +39,25 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
                   },
                 )),
             const SizedBox(height: 16),
-            const Text('Jenis Klaim field - coming in next commit'),
+            // Jenis Klaim Dropdown
+            Obx(() => CustomDropdown<String>(
+                  label: 'Jenis Klaim',
+                  hint: 'Pilih jenis klaim',
+                  value: controller.selectedClaimType.value.isEmpty
+                      ? null
+                      : controller.selectedClaimType.value,
+                  items: ClaimTypes.options
+                      .map((type) => DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(type),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      controller.selectedClaimType.value = value;
+                    }
+                  },
+                )),
             const SizedBox(height: 16),
             const Text('Detail field - coming in Phase 5'),
             const SizedBox(height: 32),
