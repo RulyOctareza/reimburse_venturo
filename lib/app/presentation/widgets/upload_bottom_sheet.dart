@@ -76,7 +76,7 @@ class UploadBottomSheet extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                                    // Bukti Foto Section
+                  // Bukti Foto Section
                   Text('Bukti Foto', style: AppTextStyles.fieldLabel),
                   const SizedBox(height: 8),
                   GestureDetector(
