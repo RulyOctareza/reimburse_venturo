@@ -182,26 +182,7 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             Obx(() => CustomButton(
                   text: 'Submit Request',
                   onPressed: controller.isFormComplete()
-                      ? () {
-                          // Validate first
-                          final validationError = controller.validateForm();
-                          if (validationError != null) {
-                            Get.snackbar(
-                              'Error',
-                              validationError,
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red.shade100,
-                            );
-                            return;
-                          }
-
-                          // Submit logic will be implemented in Phase 10
-                          Get.snackbar(
-                            'Info',
-                            'Form valid! Submit functionality akan diimplementasi di Phase 10',
-                            snackPosition: SnackPosition.BOTTOM,
-                          );
-                        }
+                      ? () => controller.submitForm()
                       : null,
                 )),
             const SizedBox(height: 16),

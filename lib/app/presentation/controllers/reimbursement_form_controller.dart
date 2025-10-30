@@ -83,6 +83,51 @@ class ReimbursementFormController extends GetxController {
     keteranganController.clear();
   }
 
+  // Submit form
+  Future<void> submitForm() async {
+    // Validate first
+    final validationError = validateForm();
+    if (validationError != null) {
+      Get.snackbar(
+        'Error',
+        validationError,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade100,
+      );
+      return;
+    }
+
+    // Show loading
+    Get.dialog(
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false,
+    );
+
+    // Simulate API call
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Close loading
+    Get.back();
+
+    // Show success message
+    Get.snackbar(
+      'Berhasil',
+      'Pengajuan reimbursement berhasil dikirim!',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green.shade100,
+      duration: const Duration(seconds: 3),
+    );
+
+    // Wait a bit then navigate back
+    await Future.delayed(const Duration(milliseconds: 500));
+    Get.back(); // Back to list
+
+    // Clear form for next use
+    clearForm();
+  }
+
   // Pick images
   Future<void> pickImages() async {
     try {
