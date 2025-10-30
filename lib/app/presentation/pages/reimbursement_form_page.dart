@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_form_controller.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/custom_dropdown.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/custom_text_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/date_picker_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/section_header.dart';
 import 'package:reimburse_venturo/core/constants/app_colors.dart';
@@ -59,7 +60,14 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
                   },
                 )),
             const SizedBox(height: 16),
-            const Text('Detail field - coming in Phase 5'),
+            // Detail Text Area
+            CustomTextField(
+              label: 'Detail',
+              hint: 'Masukkan detail pengajuan',
+              controller: controller.detailController,
+              maxLines: 5,
+              minLines: 3,
+            ),
             const SizedBox(height: 32),
 
             // Section 2: Lampiran Bukti
