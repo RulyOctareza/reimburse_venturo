@@ -30,6 +30,9 @@ class UploadBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.9,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -55,123 +58,124 @@ class UploadBottomSheet extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () => Get.back(),
-                  child: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
+                  child: const Icon(Icons.close, color: Colors.white),
                 ),
               ],
             ),
           ),
 
           // Content
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Bukti Foto Section
-                Text(
-                  'Bukti Foto',
-                  style: AppTextStyles.fieldLabel,
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: onAddFile,
-                      child: Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.primaryBlue),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: AppColors.primaryBlue,
-                          size: 32,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                // File Preview List
-                Obx(() => Column(
-                      children: selectedFiles
-                          .map((file) => FilePreviewCard(
-                                file: file,
-                                onDelete: () => onDeleteFile(file.id),
-                              ))
-                          .toList(),
-                    )),
-                const SizedBox(height: 8),
-
-                // Nominal Section
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Nominal',
-                      style: AppTextStyles.fieldLabel,
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      controller: nominalController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        CurrencyInputFormatter(),
-                      ],
-                      style: AppTextStyles.bodyMedium,
-                      decoration: InputDecoration(
-                        hintText: 'Masukkan nominal disini',
-                        hintStyle: AppTextStyles.hint,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(color: Colors.grey.shade300),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(color: Colors.grey.shade300),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(
-                            color: AppColors.primaryBlue,
-                            width: 2,
+          Flexible(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 16,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Bukti Foto Section
+                  Text('Bukti Foto', style: AppTextStyles.fieldLabel),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: onAddFile,
+                        child: Flexible(
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.primaryBlue),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: AppColors.primaryBlue,
+                              size: 32,
+                            ),
                           ),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  // File Preview List
+                  Obx(
+                    () => Column(
+                      children: selectedFiles
+                          .map(
+                            (file) => FilePreviewCard(
+                              file: file,
+                              onDelete: () => onDeleteFile(file.id),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Nominal Section
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Nominal', style: AppTextStyles.fieldLabel),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: nominalController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          CurrencyInputFormatter(),
+                        ],
+                        style: AppTextStyles.bodyMedium,
+                        decoration: InputDecoration(
+                          hintText: 'Masukkan nominal disini',
+                          hintStyle: AppTextStyles.hint,
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: AppColors.primaryBlue,
+                              width: 2,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 14,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
 
-                // Keterangan Section
-                CustomTextField(
-                  label: 'Keterangan',
-                  hint: 'Masukkan keterangan pengajuan',
-                  controller: keteranganController,
-                  maxLines: 3,
-                  minLines: 3,
-                ),
-                const SizedBox(height: 24),
+                  // Keterangan Section
+                  CustomTextField(
+                    label: 'Keterangan',
+                    hint: 'Masukkan keterangan pengajuan',
+                    controller: keteranganController,
+                    maxLines: 3,
+                    minLines: 3,
+                  ),
+                  const SizedBox(height: 24),
 
-                // Simpan Button
-                CustomButton(
-                  text: 'Simpan',
-                  onPressed: onSave,
-                ),
-                const SizedBox(height: 16),
-              ],
+                  // Simpan Button
+                  CustomButton(text: 'Simpan', onPressed: onSave),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
           ),
         ],

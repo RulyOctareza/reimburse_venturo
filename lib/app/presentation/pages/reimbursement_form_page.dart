@@ -76,9 +76,7 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
       appBar: AppBar(
         title: const Text('Pengajuan Reimburs'),
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: AppColors.primaryGradient,
-          ),
+          decoration: const BoxDecoration(gradient: AppColors.primaryGradient),
         ),
       ),
       body: SingleChildScrollView(
@@ -90,34 +88,40 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             const SectionHeader(title: 'Detail Pengajuan'),
             const SizedBox(height: 12),
             // Date Field
-            Obx(() => DatePickerField(
-                  label: 'Tanggal',
-                  hint: 'Pilih tanggal',
-                  selectedDate: controller.selectedDate.value,
-                  onDateSelected: (date) {
-                    controller.selectedDate.value = date;
-                  },
-                )),
+            Obx(
+              () => DatePickerField(
+                label: 'Tanggal',
+                hint: 'Pilih tanggal',
+                selectedDate: controller.selectedDate.value,
+                onDateSelected: (date) {
+                  controller.selectedDate.value = date;
+                },
+              ),
+            ),
             const SizedBox(height: 20),
             // Jenis Klaim Dropdown
-            Obx(() => CustomDropdown<String>(
-                  label: 'Jenis Klaim',
-                  hint: 'Pilih jenis klaim',
-                  value: controller.selectedClaimType.value.isEmpty
-                      ? null
-                      : controller.selectedClaimType.value,
-                  items: ClaimTypes.options
-                      .map((type) => DropdownMenuItem<String>(
-                            value: type,
-                            child: Text(type),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      controller.selectedClaimType.value = value;
-                    }
-                  },
-                )),
+            Obx(
+              () => CustomDropdown<String>(
+                label: 'Jenis Klaim',
+                hint: 'Pilih jenis klaim',
+                value: controller.selectedClaimType.value.isEmpty
+                    ? null
+                    : controller.selectedClaimType.value,
+                items: ClaimTypes.options
+                    .map(
+                      (type) => DropdownMenuItem<String>(
+                        value: type,
+                        child: Text(type),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    controller.selectedClaimType.value = value;
+                  }
+                },
+              ),
+            ),
             const SizedBox(height: 20),
             // Detail Text Area
             CustomTextField(
@@ -145,8 +149,8 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
                   ...controller.uploadedItems.map(
                     (item) => UploadedItemCard(
                       item: item,
-                      onTap: () {
-                        // Can edit later if needed
+                      onDelete: () {
+                        controller.deleteUploadedItem(item.id);
                       },
                     ),
                   ),
@@ -171,20 +175,24 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             // Section 3: Approval Line
             const SectionHeader(title: 'Approval Line'),
             const SizedBox(height: 12),
-            Obx(() => Column(
-                  children: controller.approvers
-                      .map((approver) => ApproverCard(approver: approver))
-                      .toList(),
-                )),
+            Obx(
+              () => Column(
+                children: controller.approvers
+                    .map((approver) => ApproverCard(approver: approver))
+                    .toList(),
+              ),
+            ),
             const SizedBox(height: 32),
 
             // Submit Button
-            Obx(() => CustomButton(
-                  text: 'Submit Request',
-                  onPressed: controller.isFormComplete()
-                      ? () => controller.submitForm()
-                      : null,
-                )),
+            Obx(
+              () => CustomButton(
+                text: 'Submit Request',
+                onPressed: controller.isFormComplete()
+                    ? () => controller.submitForm()
+                    : null,
+              ),
+            ),
             const SizedBox(height: 16),
           ],
         ),

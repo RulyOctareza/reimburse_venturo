@@ -13,7 +13,7 @@ dependencies:
   google_fonts: ^6.1.0           # Inter font family
   table_calendar: ^3.0.9         # Calendar widget
   image_picker: ^1.0.7           # Image selection
-  file_picker: ^6.1.1            # File selection (PDF, Excel, etc)
+  file_picker: ^8.1.6            # File selection (PDF, Excel, etc)
   intl: ^0.19.0                  # Currency & date formatting
   dotted_border: ^2.1.0          # Dotted border for upload area
 

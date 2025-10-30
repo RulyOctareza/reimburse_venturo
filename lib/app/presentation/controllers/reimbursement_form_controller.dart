@@ -17,6 +17,7 @@ class ReimbursementFormController extends GetxController {
   final Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
   final RxString selectedClaimType = ''.obs;
   final TextEditingController detailController = TextEditingController();
+  final RxString detailText = ''.obs; // Observable untuk detail text
 
   // Upload fields (for bottom sheet)
   final TextEditingController nominalController = TextEditingController();
@@ -36,6 +37,11 @@ class ReimbursementFormController extends GetxController {
     super.onInit();
     // Load dummy approvers
     approvers.value = ApproverModel.getDummyData();
+
+    // Add listener to detailController to update observable
+    detailController.addListener(() {
+      detailText.value = detailController.text;
+    });
   }
 
   // Validate form
@@ -63,16 +69,13 @@ class ReimbursementFormController extends GetxController {
   bool isFormComplete() {
     return selectedDate.value != null &&
         selectedClaimType.value.isNotEmpty &&
-        detailController.text.isNotEmpty &&
+        detailText.value.isNotEmpty &&
         uploadedItems.isNotEmpty;
   }
 
   // Helper method to get total nominal
   int getTotalNominal() {
-    return uploadedItems.fold(
-      0,
-      (sum, item) => sum + item.nominal,
-    );
+    return uploadedItems.fold(0, (sum, item) => sum + item.nominal);
   }
 
   // Clear all form data
@@ -94,41 +97,65 @@ class ReimbursementFormController extends GetxController {
       Get.snackbar(
         'Error',
         validationError,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade100,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        margin: const EdgeInsets.all(16),
       );
       return;
     }
 
-    // Show loading
-    Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false,
-    );
+    try {
+      // Show loading
+      Get.dialog(
+        const Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
 
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 2));
+      // Simulate API call
+      await Future.delayed(const Duration(seconds: 2));
 
-    // Close loading
-    Get.back();
+      // Close loading dialog
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
 
-    // Show success message
-    Get.snackbar(
-      'Berhasil',
-      'Pengajuan reimbursement berhasil dikirim!',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.green.shade100,
-      duration: const Duration(seconds: 3),
-    );
+      // Clear form before showing success message
+      clearForm();
 
-    // Wait a bit then navigate back
-    await Future.delayed(const Duration(milliseconds: 500));
-    Get.back(); // Back to list
+      // Navigate back to list page
+      Get.back();
 
-    // Clear form for next use
-    clearForm();
+      // Show success message after navigation
+      await Future.delayed(const Duration(milliseconds: 300));
+      Get.snackbar(
+        'Berhasil',
+        'Pengajuan reimbursement berhasil dikirim!',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        icon: const Icon(Icons.check_circle, color: Colors.white),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 3),
+      );
+    } catch (e) {
+      // Close loading dialog if still open
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+
+      // Show error message
+      Get.snackbar(
+        'Error',
+        'Terjadi kesalahan saat mengirim pengajuan',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        margin: const EdgeInsets.all(16),
+      );
+    }
   }
 
   // Pick images
@@ -145,24 +172,34 @@ class ReimbursementFormController extends GetxController {
           Get.snackbar(
             'Error',
             'File ${image.name} melebihi 5MB',
-            snackPosition: SnackPosition.BOTTOM,
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+            icon: const Icon(Icons.error, color: Colors.white),
+            margin: const EdgeInsets.all(16),
           );
           continue;
         }
 
-        selectedFiles.add(UploadFile(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          file: file,
-          fileName: image.name,
-          fileType: 'image',
-          fileSize: fileSize,
-        ));
+        selectedFiles.add(
+          UploadFile(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            file: file,
+            fileName: image.name,
+            fileType: 'image',
+            fileSize: fileSize,
+          ),
+        );
       }
     } catch (e) {
       Get.snackbar(
         'Error',
         'Gagal memilih gambar: $e',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        margin: const EdgeInsets.all(16),
       );
     }
   }
@@ -188,32 +225,44 @@ class ReimbursementFormController extends GetxController {
             Get.snackbar(
               'Error',
               'File ${platformFile.name} melebihi 5MB',
-              snackPosition: SnackPosition.BOTTOM,
+              snackPosition: SnackPosition.TOP,
+              backgroundColor: Colors.red,
+              colorText: Colors.white,
+              icon: const Icon(Icons.error, color: Colors.white),
+              margin: const EdgeInsets.all(16),
             );
             continue;
           }
 
           String fileType = 'pdf';
-          if (platformFile.extension == 'xlsx' || platformFile.extension == 'xls') {
+          if (platformFile.extension == 'xlsx' ||
+              platformFile.extension == 'xls') {
             fileType = 'excel';
-          } else if (platformFile.extension == 'doc' || platformFile.extension == 'docx') {
+          } else if (platformFile.extension == 'doc' ||
+              platformFile.extension == 'docx') {
             fileType = 'doc';
           }
 
-          selectedFiles.add(UploadFile(
-            id: DateTime.now().millisecondsSinceEpoch.toString(),
-            file: file,
-            fileName: platformFile.name,
-            fileType: fileType,
-            fileSize: fileSize,
-          ));
+          selectedFiles.add(
+            UploadFile(
+              id: DateTime.now().millisecondsSinceEpoch.toString(),
+              file: file,
+              fileName: platformFile.name,
+              fileType: fileType,
+              fileSize: fileSize,
+            ),
+          );
         }
       }
     } catch (e) {
       Get.snackbar(
         'Error',
         'Gagal memilih dokumen: $e',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        margin: const EdgeInsets.all(16),
       );
     }
   }
@@ -230,7 +279,11 @@ class ReimbursementFormController extends GetxController {
       Get.snackbar(
         'Error',
         'Pilih minimal 1 file',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        margin: const EdgeInsets.all(16),
       );
       return;
     }
@@ -239,7 +292,11 @@ class ReimbursementFormController extends GetxController {
       Get.snackbar(
         'Error',
         'Nominal harus diisi',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        margin: const EdgeInsets.all(16),
       );
       return;
     }
@@ -250,7 +307,11 @@ class ReimbursementFormController extends GetxController {
       Get.snackbar(
         'Error',
         'Nominal tidak valid',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+        margin: const EdgeInsets.all(16),
       );
       return;
     }
@@ -274,7 +335,25 @@ class ReimbursementFormController extends GetxController {
     Get.snackbar(
       'Berhasil',
       'Data berhasil disimpan',
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      icon: const Icon(Icons.check_circle, color: Colors.white),
+      margin: const EdgeInsets.all(16),
+    );
+  }
+
+  // Delete uploaded item
+  void deleteUploadedItem(String itemId) {
+    uploadedItems.removeWhere((item) => item.id == itemId);
+    Get.snackbar(
+      'Berhasil',
+      'Item berhasil dihapus',
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      icon: const Icon(Icons.check_circle, color: Colors.white),
+      margin: const EdgeInsets.all(16),
     );
   }
 

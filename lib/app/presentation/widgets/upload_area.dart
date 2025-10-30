@@ -31,7 +31,7 @@ class UploadArea extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.cloud_upload_outlined,
                 size: 48,
                 color: AppColors.textLightGray,

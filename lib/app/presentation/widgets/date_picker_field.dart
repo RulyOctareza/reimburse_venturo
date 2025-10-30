@@ -91,10 +91,7 @@ class DatePickerField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppTextStyles.fieldLabel,
-        ),
+        Text(label, style: AppTextStyles.fieldLabel),
         const SizedBox(height: 8),
         InkWell(
           onTap: () => _showDatePicker(context),
@@ -116,7 +113,7 @@ class DatePickerField extends StatelessWidget {
                 Expanded(
                   child: Text(
                     selectedDate != null
-                        ? DateFormat('dd MMM yyyy', 'id_ID').format(selectedDate!)
+                        ? DateFormat('dd MMM yyyy', 'id').format(selectedDate!)
                         : hint,
                     style: selectedDate != null
                         ? AppTextStyles.bodyMedium
