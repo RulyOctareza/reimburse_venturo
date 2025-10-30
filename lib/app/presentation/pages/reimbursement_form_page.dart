@@ -5,6 +5,7 @@ import 'package:reimburse_venturo/app/presentation/widgets/custom_dropdown.dart'
 import 'package:reimburse_venturo/app/presentation/widgets/custom_text_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/date_picker_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/section_header.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/upload_area.dart';
 import 'package:reimburse_venturo/core/constants/app_colors.dart';
 import 'package:reimburse_venturo/core/constants/claim_types.dart';
 
@@ -73,7 +74,16 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             // Section 2: Lampiran Bukti
             const SectionHeader(title: 'Lampiran Bukti'),
             const SizedBox(height: 12),
-            const Text('Upload area - coming in Phase 6'),
+            UploadArea(
+              onTap: () {
+                // Bottom sheet will be implemented in next commit
+                Get.snackbar(
+                  'Info',
+                  'Upload bottom sheet akan diimplementasi di commit berikutnya',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              },
+            ),
             const SizedBox(height: 24),
 
             // Section 3: Approval Line
