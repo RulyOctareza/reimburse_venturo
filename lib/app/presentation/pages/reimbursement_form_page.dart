@@ -29,7 +29,7 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
           children: [
             // Section 1: Detail Pengajuan
             const SectionHeader(title: 'Detail Pengajuan'),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             // Date Field
             Obx(() => DatePickerField(
                   label: 'Tanggal',
@@ -39,7 +39,7 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
                     controller.selectedDate.value = date;
                   },
                 )),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             // Jenis Klaim Dropdown
             Obx(() => CustomDropdown<String>(
                   label: 'Jenis Klaim',
@@ -59,7 +59,7 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
                     }
                   },
                 )),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             // Detail Text Area
             CustomTextField(
               label: 'Detail',
@@ -68,17 +68,17 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
               maxLines: 5,
               minLines: 3,
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
 
             // Section 2: Lampiran Bukti
             const SectionHeader(title: 'Lampiran Bukti'),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             const Text('Upload area - coming in Phase 6'),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
 
             // Section 3: Approval Line
             const SectionHeader(title: 'Approval Line'),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             const Text('Approval cards - coming in Phase 8'),
           ],
         ),
