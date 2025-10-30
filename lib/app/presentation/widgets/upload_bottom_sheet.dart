@@ -31,7 +31,7 @@ class UploadBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.9,
+        maxHeight: MediaQuery.of(context).size.height * 0.5,
       ),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -79,37 +79,37 @@ class UploadBottomSheet extends StatelessWidget {
                   // Bukti Foto Section
                   Text('Bukti Foto', style: AppTextStyles.fieldLabel),
                   const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: onAddFile,
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.primaryBlue),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        color: AppColors.primaryBlue,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // File Preview List
+                  // File Preview List - Horizontal Layout
                   Obx(
-                    () => Column(
-                      children: selectedFiles
-                          .map(
-                            (file) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: FilePreviewCard(
-                                file: file,
-                                onDelete: () => onDeleteFile(file.id),
-                              ),
+                    () => Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        // Add Button
+                        GestureDetector(
+                          onTap: onAddFile,
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.primaryBlue),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                          )
-                          .toList(),
+                            child: const Icon(
+                              Icons.add,
+                              color: AppColors.primaryBlue,
+                              size: 32,
+                            ),
+                          ),
+                        ),
+                        // File Previews
+                        ...selectedFiles.map(
+                          (file) => FilePreviewCard(
+                            file: file,
+                            onDelete: () => onDeleteFile(file.id),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 8),
