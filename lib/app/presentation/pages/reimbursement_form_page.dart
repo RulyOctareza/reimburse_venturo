@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_form_controller.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/date_picker_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/section_header.dart';
 import 'package:reimburse_venturo/core/constants/app_colors.dart';
 
@@ -26,8 +27,15 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             // Section 1: Detail Pengajuan
             const SectionHeader(title: 'Detail Pengajuan'),
             const SizedBox(height: 16),
-            // Fields will be added in next commits
-            const Text('Tanggal field - coming in next commit'),
+            // Date Field
+            Obx(() => DatePickerField(
+                  label: 'Tanggal',
+                  hint: 'Pilih tanggal',
+                  selectedDate: controller.selectedDate.value,
+                  onDateSelected: (date) {
+                    controller.selectedDate.value = date;
+                  },
+                )),
             const SizedBox(height: 16),
             const Text('Jenis Klaim field - coming in next commit'),
             const SizedBox(height: 16),
