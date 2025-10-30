@@ -65,7 +65,7 @@ class UploadBottomSheet extends StatelessWidget {
           ),
 
           // Content
-          Flexible(
+          Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.only(
                 left: 16,
@@ -76,30 +76,24 @@ class UploadBottomSheet extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Bukti Foto Section
+                                    // Bukti Foto Section
                   Text('Bukti Foto', style: AppTextStyles.fieldLabel),
                   const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: onAddFile,
-                        child: Flexible(
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.primaryBlue),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Icon(
-                              Icons.add,
-                              color: AppColors.primaryBlue,
-                              size: 32,
-                            ),
-                          ),
-                        ),
+                  GestureDetector(
+                    onTap: onAddFile,
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.primaryBlue),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ],
+                      child: const Icon(
+                        Icons.add,
+                        color: AppColors.primaryBlue,
+                        size: 32,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 12),
                   // File Preview List
@@ -107,9 +101,12 @@ class UploadBottomSheet extends StatelessWidget {
                     () => Column(
                       children: selectedFiles
                           .map(
-                            (file) => FilePreviewCard(
-                              file: file,
-                              onDelete: () => onDeleteFile(file.id),
+                            (file) => Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: FilePreviewCard(
+                                file: file,
+                                onDelete: () => onDeleteFile(file.id),
+                              ),
                             ),
                           )
                           .toList(),
