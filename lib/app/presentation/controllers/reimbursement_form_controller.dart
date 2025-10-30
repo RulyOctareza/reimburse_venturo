@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:reimburse_venturo/app/domain/entities/upload_file.dart';
+import 'package:reimburse_venturo/app/domain/entities/uploaded_item.dart';
+import 'package:reimburse_venturo/core/utils/currency_formatter.dart';
 
 class ReimbursementFormController extends GetxController {
   // Form fields
@@ -15,6 +17,9 @@ class ReimbursementFormController extends GetxController {
   final TextEditingController nominalController = TextEditingController();
   final TextEditingController keteranganController = TextEditingController();
   final RxList<UploadFile> selectedFiles = <UploadFile>[].obs;
+
+  // Uploaded items (saved items)
+  final RxList<UploadedItem> uploadedItems = <UploadedItem>[].obs;
 
   final ImagePicker _imagePicker = ImagePicker();
 
@@ -108,6 +113,61 @@ class ReimbursementFormController extends GetxController {
   // Remove file
   void removeFile(String fileId) {
     selectedFiles.removeWhere((file) => file.id == fileId);
+  }
+
+  // Save uploaded item
+  void saveUploadedItem() {
+    // Validate
+    if (selectedFiles.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Pilih minimal 1 file',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    if (nominalController.text.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Nominal harus diisi',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    // Parse nominal
+    final nominal = CurrencyFormatter.parseFromRupiah(nominalController.text);
+    if (nominal == 0) {
+      Get.snackbar(
+        'Error',
+        'Nominal tidak valid',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    // Create uploaded item
+    final item = UploadedItem(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      files: List.from(selectedFiles),
+      nominal: nominal,
+      keterangan: keteranganController.text,
+    );
+
+    uploadedItems.add(item);
+
+    // Clear form
+    selectedFiles.clear();
+    nominalController.clear();
+    keteranganController.clear();
+
+    Get.back();
+    Get.snackbar(
+      'Berhasil',
+      'Data berhasil disimpan',
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 
   @override

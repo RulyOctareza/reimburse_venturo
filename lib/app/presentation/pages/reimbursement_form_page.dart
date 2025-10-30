@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_form_controller.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/custom_button.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/custom_dropdown.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/custom_text_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/date_picker_field.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/section_header.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/upload_area.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/upload_bottom_sheet.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/uploaded_item_card.dart';
 import 'package:reimburse_venturo/core/constants/app_colors.dart';
 import 'package:reimburse_venturo/core/constants/claim_types.dart';
 
@@ -59,13 +61,7 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
           controller.removeFile(fileId);
         },
         onSave: () {
-          // Save logic will be implemented in next commits
-          Get.back();
-          Get.snackbar(
-            'Berhasil',
-            'Data berhasil disimpan',
-            snackPosition: SnackPosition.BOTTOM,
-          );
+          controller.saveUploadedItem();
         },
       ),
       isScrollControlled: true,
@@ -135,11 +131,40 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             // Section 2: Lampiran Bukti
             const SectionHeader(title: 'Lampiran Bukti'),
             const SizedBox(height: 12),
-            UploadArea(
-              onTap: () {
-                _showUploadBottomSheet();
-              },
-            ),
+            Obx(() {
+              if (controller.uploadedItems.isEmpty) {
+                return UploadArea(
+                  onTap: () {
+                    _showUploadBottomSheet();
+                  },
+                );
+              }
+              return Column(
+                children: [
+                  ...controller.uploadedItems.map(
+                    (item) => UploadedItemCard(
+                      item: item,
+                      onTap: () {
+                        // Can edit later if needed
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  CustomButton(
+                    text: '+ Tambah Item',
+                    onPressed: () {
+                      _showUploadBottomSheet();
+                    },
+                    useGradient: false,
+                    backgroundColor: Colors.white,
+                    textStyle: const TextStyle(
+                      color: AppColors.primaryBlue,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              );
+            }),
             const SizedBox(height: 24),
 
             // Section 3: Approval Line
