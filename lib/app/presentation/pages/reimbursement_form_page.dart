@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_form_controller.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/approver_card.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/custom_button.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/custom_dropdown.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/custom_text_field.dart';
@@ -170,7 +171,26 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             // Section 3: Approval Line
             const SectionHeader(title: 'Approval Line'),
             const SizedBox(height: 12),
-            const Text('Approval cards - coming in Phase 8'),
+            Obx(() => Column(
+                  children: controller.approvers
+                      .map((approver) => ApproverCard(approver: approver))
+                      .toList(),
+                )),
+            const SizedBox(height: 32),
+
+            // Submit Button
+            CustomButton(
+              text: 'Submit Request',
+              onPressed: () {
+                // Submit logic will be implemented in Phase 10
+                Get.snackbar(
+                  'Info',
+                  'Submit functionality akan diimplementasi di Phase 10',
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              },
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
