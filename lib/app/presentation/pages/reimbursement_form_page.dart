@@ -13,18 +13,46 @@ import 'package:reimburse_venturo/core/constants/claim_types.dart';
 class ReimbursementFormPage extends GetView<ReimbursementFormController> {
   const ReimbursementFormPage({super.key});
 
+  void _showFilePickerOptions() {
+    Get.bottomSheet(
+      Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.image),
+              title: const Text('Pilih Gambar'),
+              onTap: () {
+                Get.back();
+                controller.pickImages();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.description),
+              title: const Text('Pilih Dokumen (PDF, Excel)'),
+              onTap: () {
+                Get.back();
+                controller.pickDocuments();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _showUploadBottomSheet() {
     Get.bottomSheet(
       UploadBottomSheet(
         nominalController: controller.nominalController,
         keteranganController: controller.keteranganController,
         onAddFile: () {
-          // File picker will be implemented in next commit
-          Get.snackbar(
-            'Info',
-            'File picker akan diimplementasi di commit berikutnya',
-            snackPosition: SnackPosition.BOTTOM,
-          );
+          _showFilePickerOptions();
         },
         onSave: () {
           // Save logic will be implemented in next commits
