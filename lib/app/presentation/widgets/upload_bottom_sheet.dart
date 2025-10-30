@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:reimburse_venturo/app/domain/entities/upload_file.dart';
 import 'package:reimburse_venturo/app/presentation/widgets/custom_button.dart';
@@ -6,6 +7,7 @@ import 'package:reimburse_venturo/app/presentation/widgets/custom_text_field.dar
 import 'package:reimburse_venturo/app/presentation/widgets/file_preview_card.dart';
 import 'package:reimburse_venturo/core/constants/app_colors.dart';
 import 'package:reimburse_venturo/core/theme/app_text_styles.dart';
+import 'package:reimburse_venturo/core/utils/currency_formatter.dart';
 
 class UploadBottomSheet extends StatelessWidget {
   final TextEditingController nominalController;
@@ -107,11 +109,49 @@ class UploadBottomSheet extends StatelessWidget {
                 const SizedBox(height: 8),
 
                 // Nominal Section
-                CustomTextField(
-                  label: 'Nominal',
-                  hint: 'Masukkan nominal disini',
-                  controller: nominalController,
-                  keyboardType: TextInputType.number,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Nominal',
+                      style: AppTextStyles.fieldLabel,
+                    ),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      controller: nominalController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        CurrencyInputFormatter(),
+                      ],
+                      style: AppTextStyles.bodyMedium,
+                      decoration: InputDecoration(
+                        hintText: 'Masukkan nominal disini',
+                        hintStyle: AppTextStyles.hint,
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: AppColors.primaryBlue,
+                            width: 2,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
 
