@@ -7,9 +7,15 @@ class ReimbursementFormController extends GetxController {
   final RxString selectedClaimType = ''.obs;
   final TextEditingController detailController = TextEditingController();
 
+  // Upload fields (for bottom sheet)
+  final TextEditingController nominalController = TextEditingController();
+  final TextEditingController keteranganController = TextEditingController();
+
   @override
   void onClose() {
     detailController.dispose();
+    nominalController.dispose();
+    keteranganController.dispose();
     super.onClose();
   }
 }
