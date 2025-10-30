@@ -134,42 +134,69 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
             const SizedBox(height: 24),
 
             // Section 2: Lampiran Bukti
-            const SectionHeader(title: 'Lampiran Bukti'),
-            const SizedBox(height: 12),
-            Obx(() {
-              if (controller.uploadedItems.isEmpty) {
-                return UploadArea(
-                  onTap: () {
-                    _showUploadBottomSheet();
-                  },
-                );
-              }
-              return Column(
-                children: [
-                  ...controller.uploadedItems.map(
-                    (item) => UploadedItemCard(
-                      item: item,
-                      onDelete: () {
-                        controller.deleteUploadedItem(item.id);
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  CustomButton(
-                    text: '+ Tambah Item',
-                    onPressed: () {
-                      _showUploadBottomSheet();
-                    },
-                    useGradient: false,
-                    backgroundColor: Colors.white,
-                    textStyle: const TextStyle(
-                      color: AppColors.primaryBlue,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              );
-            }),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SectionHeader(title: 'Lampiran Bukti'),
+                    const SizedBox(height: 12),
+                    Obx(() {
+                      if (controller.uploadedItems.isEmpty) {
+                        return UploadArea(
+                          onTap: () {
+                            _showUploadBottomSheet();
+                          },
+                        );
+                      }
+                      return Column(
+                        children: [
+                          ...controller.uploadedItems
+                              .map(
+                                (item) => UploadedItemCard(
+                                  item: item,
+                                  onDelete: () {
+                                    controller.deleteUploadedItem(item.id);
+                                  },
+                                ),
+                              )
+                              .toList(),
+                          const SizedBox(height: 12),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.textLightGray.withValues(
+                                  alpha: 0.5,
+                                ),
+                                style: BorderStyle.solid,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: CustomButton(
+                              text: '+ Tambah Item',
+                              onPressed: () {
+                                _showUploadBottomSheet();
+                              },
+                              useGradient: false,
+                              backgroundColor: Colors.white,
+                              textStyle: const TextStyle(
+                                color: AppColors.textLightGray,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 24),
 
             // Section 3: Approval Line

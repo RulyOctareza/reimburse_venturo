@@ -238,10 +238,6 @@ class UploadedItemCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        '${item.files.length} file',
-                        style: AppTextStyles.hint.copyWith(fontSize: 11),
-                      ),
                     ],
                   ),
                 ),
@@ -257,11 +253,6 @@ class UploadedItemCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const Icon(
-                      Icons.info_outline,
-                      size: 16,
-                      color: Colors.grey,
-                    ),
                   ],
                 ),
               ],
