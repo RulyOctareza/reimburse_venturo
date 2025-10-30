@@ -1,11 +1,12 @@
 import 'dart:io';
 
+/// Entity representing an uploaded file
 class UploadFile {
   final String id;
   final File file;
   final String fileName;
-  final String fileType; // image, pdf, excel
-  final int fileSize;
+  final String fileType; // image, pdf, excel, doc
+  final int fileSize; // in bytes
 
   UploadFile({
     required this.id,
