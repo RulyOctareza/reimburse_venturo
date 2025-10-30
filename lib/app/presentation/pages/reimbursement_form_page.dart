@@ -51,8 +51,12 @@ class ReimbursementFormPage extends GetView<ReimbursementFormController> {
       UploadBottomSheet(
         nominalController: controller.nominalController,
         keteranganController: controller.keteranganController,
+        selectedFiles: controller.selectedFiles,
         onAddFile: () {
           _showFilePickerOptions();
+        },
+        onDeleteFile: (fileId) {
+          controller.removeFile(fileId);
         },
         onSave: () {
           // Save logic will be implemented in next commits
