@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_form_controller.dart';
 import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_list_controller.dart';
 import 'package:reimburse_venturo/app/presentation/pages/reimbursement_form_page.dart';
 import 'package:reimburse_venturo/app/presentation/pages/reimbursement_list_page.dart';
@@ -20,6 +21,9 @@ class AppPages {
     GetPage(
       name: AppRoutes.reimbursementForm,
       page: () => const ReimbursementFormPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => ReimbursementFormController());
+      }),
     ),
   ];
 }

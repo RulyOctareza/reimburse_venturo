@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reimburse_venturo/app/presentation/controllers/reimbursement_form_controller.dart';
+import 'package:reimburse_venturo/app/presentation/widgets/section_header.dart';
 import 'package:reimburse_venturo/core/constants/app_colors.dart';
 
-class ReimbursementFormPage extends StatelessWidget {
+class ReimbursementFormPage extends GetView<ReimbursementFormController> {
   const ReimbursementFormPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final String? itemId = Get.parameters['id'];
-    final String? title = Get.parameters['title'];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pengajuan Reimburs'),
@@ -19,14 +18,32 @@ class ReimbursementFormPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Form Page - ID: $itemId'),
-            Text('Title: $title'),
-            const SizedBox(height: 20),
-            const Text('Form will be implemented in Phase 4'),
+            // Section 1: Detail Pengajuan
+            const SectionHeader(title: 'Detail Pengajuan'),
+            const SizedBox(height: 16),
+            // Fields will be added in next commits
+            const Text('Tanggal field - coming in next commit'),
+            const SizedBox(height: 16),
+            const Text('Jenis Klaim field - coming in next commit'),
+            const SizedBox(height: 16),
+            const Text('Detail field - coming in Phase 5'),
+            const SizedBox(height: 32),
+
+            // Section 2: Lampiran Bukti
+            const SectionHeader(title: 'Lampiran Bukti'),
+            const SizedBox(height: 16),
+            const Text('Upload area - coming in Phase 6'),
+            const SizedBox(height: 32),
+
+            // Section 3: Approval Line
+            const SectionHeader(title: 'Approval Line'),
+            const SizedBox(height: 16),
+            const Text('Approval cards - coming in Phase 8'),
           ],
         ),
       ),
