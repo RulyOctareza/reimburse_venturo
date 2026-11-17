@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/preview/hero.png" alt="Reimburse Venturo — ilustrasi aplikasi pengajuan reimburse" width="100%">
+  <img src="docs/preview/hero.svg" alt="Reimburse Venturo — ilustrasi aplikasi pengajuan reimburse" width="100%">
 </p>
 
 <h1 align="center">Reimburse Venturo</h1>
