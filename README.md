@@ -1,208 +1,101 @@
-# Reimburse Venturo
+<p align="center">
+  <img src="docs/preview/hero.png" alt="Reimburse Venturo — ilustrasi aplikasi pengajuan reimburse" width="100%">
+</p>
 
-A Flutter reimbursement management application built with Clean Architecture and GetX state management.
+<h1 align="center">Reimburse Venturo</h1>
 
-## Features
+<p align="center">
+  <b>Ajukan reimburse tanpa ribet: isi form, lampirkan bukti, pantau approval.</b><br>
+  Flutter · Clean Architecture · GetX
+</p>
 
-- **Reimbursement List**: View all available reimbursement categories
-- **Reimbursement Form**: Complete form for submitting reimbursement requests
-  - Date picker with calendar view
-  - Claim type dropdown (8 types)
-  - Detail text area
-  - File upload (images, PDF, Excel, Word)
-  - Currency input with Rupiah formatting
-  - Multiple attachment support
-- **File Management**: Upload and preview multiple files per submission
-- **Approval Line**: Display approval hierarchy with status tracking
-- **Form Validation**: Comprehensive validation before submission
+<p align="center">
+  <a href="https://flutter.dev"><img alt="Flutter" src="https://img.shields.io/badge/Flutter-3.9%2B-02569B?logo=flutter&logoColor=white"></a>
+  <a href="https://pub.dev/packages/get"><img alt="GetX" src="https://img.shields.io/badge/State-GetX-8E24AA"></a>
+  <img alt="Arch" src="https://img.shields.io/badge/Architecture-Clean-0D9488">
+</p>
 
-## Tech Stack
+---
 
-- **Flutter**: 3.9.0+
-- **Dart**: 3.0.0+
-- **State Management**: GetX 4.6.6
-- **UI Components**:
-  - google_fonts: ^6.2.1
-  - table_calendar: ^3.1.2
-  - dotted_border: ^2.1.0
-- **File Handling**:
-  - image_picker: ^1.1.2
-  - file_picker: ^8.1.2
-- **Utilities**:
-  - intl: ^0.19.0 (for currency and date formatting)
+## ✨ Preview
 
-## Architecture
+<p align="center">
+  <img src="docs/preview/hero.png" alt="Mockup gelap Reimburse Venturo" width="90%">
+</p>
 
-This project follows **Clean Architecture** principles with three main layers:
+<table align="center">
+  <tr>
+    <td><img src="design/2.jpg" alt="Desain 1" width="180"></td>
+    <td><img src="design/3.jpg" alt="Desain 2" width="180"></td>
+    <td><img src="design/4.jpg" alt="Desain 3" width="180"></td>
+    <td><img src="design/5.jpg" alt="Desain 4" width="180"></td>
+  </tr>
+  <tr>
+    <td align="center">Form pengajuan</td>
+    <td align="center">Detail</td>
+    <td align="center">Upload bukti</td>
+    <td align="center">Approval</td>
+  </tr>
+</table>
 
-### 1. Data Layer (`lib/app/data/`)
-- **Models**: Data models with serialization logic
-- **Repositories**: Implementation of data sources (API, local storage)
+---
 
-### 2. Domain Layer (`lib/app/domain/`)
-- **Entities**: Business objects (pure Dart classes)
-- **Use Cases**: Business logic and rules
+## 📖 Tentang
 
-### 3. Presentation Layer (`lib/app/presentation/`)
-- **Pages**: Screen UI components
-- **Controllers**: GetX controllers for state management
-- **Widgets**: Reusable UI components
+Aplikasi manajemen reimburse karyawan. Pengguna membuat pengajuan lengkap dengan tanggal,
+jenis klaim, nominal Rupiah, detail, dan lampiran (gambar, PDF, Excel, Word), lalu melihat
+status persetujuan sesuai alur approval.
 
-### Core (`lib/core/`)
-- **Constants**: App-wide constants (colors, claim types)
-- **Theme**: Theme configuration and text styles
-- **Utils**: Utility functions (currency formatter)
+---
 
-## Design Specifications
+## 🌟 Fitur
 
-The app follows a professional business application design:
+- 📋 **Daftar kategori reimburse**
+- 📝 **Form pengajuan** — date picker kalender, dropdown 8 jenis klaim, text area detail
+- 💰 **Input nominal** dengan format Rupiah
+- 📎 **Upload multi-file** — gambar, PDF, Excel, Word, dengan preview
+- 🧾 **Approval line** — hierarki persetujuan beserta status
+- ✅ **Validasi form** sebelum submit
 
-- **Primary Blue**: #0C4886 (Dark Blue), #157FEC (Light Blue)
-- **Success Green**: #73D490
-- **Background**: #FFFFFF with subtle shadows
-- **Typography**: Inter font family
-  - Title: 19sp, Semi-Bold
-  - Section Headers: 14sp, Semi-Bold
-  - Body Text: 13sp, Regular
-  - Hints: 11sp, Regular
+---
 
-## Getting Started
+## 🛠️ Tech Stack
 
-### Prerequisites
+| Area | Pilihan |
+|---|---|
+| Framework | Flutter 3.9+, Dart 3 |
+| State management | GetX 4.6 |
+| UI | Google Fonts, Table Calendar, Dotted Border |
+| File | `image_picker`, `file_picker` |
+| Format | `intl` (Rupiah & tanggal) |
 
-- Flutter SDK (3.9.0 or higher)
-- Dart SDK (3.0.0 or higher)
-- Android Studio / VS Code with Flutter plugin
+---
 
-### Installation
+## 🏗️ Arsitektur
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd reimburse_venturo
+Clean Architecture tiga lapis:
+
+```text
+lib/app/
+├── data/        # Model & repository implementation
+├── domain/      # Entity & use case
+└── presentation/# UI, controller GetX
 ```
 
-2. Install dependencies:
+---
+
+## 🚀 Menjalankan
+
 ```bash
 flutter pub get
-```
-
-3. Run the app:
-```bash
 flutter run
 ```
 
-## Project Structure
+---
 
-```
-lib/
-├── app/
-│   ├── data/
-│   │   └── models/           # Data models with dummy data
-│   ├── domain/
-│   │   └── entities/         # Business entities
-│   ├── presentation/
-│   │   ├── controllers/      # GetX controllers
-│   │   ├── pages/            # Screen pages
-│   │   └── widgets/          # Reusable widgets
-│   └── routes/               # App routing configuration
-├── core/
-│   ├── constants/            # App constants
-│   ├── theme/                # Theme and styles
-│   └── utils/                # Utility functions
-└── main.dart                 # App entry point
-```
+## 🧪 Testing
 
-## Screens
-
-### 1. Reimbursement List Page
-- Displays 8 reimbursement categories
-- Gradient app bar with primary blue colors
-- Clickable cards with navigation arrows
-- Empty state handling
-
-### 2. Reimbursement Form Page
-- **Section 1: Data Pengajuan**
-  - Date picker field with calendar bottom sheet
-  - Claim type dropdown with 8 options
-  - Detail text area (multiline)
-- **Section 2: Upload Bukti**
-  - Dotted border upload area
-  - Support for multiple file types (image, PDF, Excel, Word)
-  - File size validation (5MB max)
-  - Currency input with auto-formatting (Rupiah)
-  - File preview with type-specific icons
-  - Display uploaded items with nominal
-- **Section 3: Approval Line**
-  - Hierarchical approval display
-  - Approver cards with avatar, name, job title
-  - Status badges (Waiting, Approved, Rejected)
-- **Submit Button**
-  - Gradient background
-  - Disabled state when form incomplete
-  - Loading state during submission
-
-## Key Features Implementation
-
-### Currency Formatting
-The app includes a custom `CurrencyFormatter` utility that:
-- Formats integers to Rupiah string with dot separators (20000 → 20.000)
-- Parses formatted strings back to integers
-- Includes `CurrencyInputFormatter` for real-time input formatting
-
-### File Upload
-- Supports multiple file selection (images and documents)
-- File type detection and appropriate icon display
-- Size validation with user-friendly error messages
-- Preview for images, icon representation for documents
-
-### Form Validation
-Comprehensive validation before submission:
-- Date must be selected
-- Claim type must be chosen
-- Detail must be filled
-- At least one attachment required
-
-### State Management
-Uses GetX for reactive state management:
-- Reactive variables with `.obs`
-- Automatic UI updates with `Obx()`
-- Controller lifecycle management
-- Dependency injection with GetX bindings
-
-## Development Approach
-
-This project was developed with 30 natural, incremental commits across 11 phases:
-- **Phase 1**: Project setup and configuration
-- **Phase 2**: Reusable component library
-- **Phase 3**: List screen implementation
-- **Phase 4**: Form structure and basic fields
-- **Phase 5**: Detail section
-- **Phase 6**: File upload functionality
-- **Phase 7**: Currency formatting
-- **Phase 8**: Approval line
-- **Phase 9**: Form controller and validation
-- **Phase 10**: Submit functionality and polish
-- **Phase 11**: Documentation
-
-## Testing
-
-To run tests:
 ```bash
+flutter analyze
 flutter test
 ```
-
-## Build
-
-To build the app for release:
-```bash
-# Android
-flutter build apk --release
-
-# iOS
-flutter build ios --release
-```
-
-## License
-
-This project is part of a technical assessment.
